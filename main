@@ -1,0 +1,34 @@
+import discord
+from discord.ext import commands
+import os, random
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='#', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
+@bot.command()
+async def jenis_sampah(ctx):
+    await ctx.send(f'Jenis-jenis sampah: 1. Sisa makanan, membutuhkan waktu 1-6 bulan untuk terurai. 2. Sampah kering, membutuhkan waktu sekitar 2-4 minggu. 3. Sampah plastik, terbagi menjadi beberapa kategori: Kantong plastik baru bisa terurai sekitar 10 tahun – 500 tahun, sedotan plastik bisa terurai sekitar 20 tahun, gelas plastik terurai sekitar 50 tahun, kemasan sachet plastik membutuhkan 50 tahun – 80 tahun, dan botol plastik terurai sekitar 450 tahun, sedangkan styrofoam tidak bisa terurai oleh lingkungan. 4. Sampah kertas, membutuhkan waktu 2 hingga 6 minggu. 5. Kaleng minuman, membutuhkan waktu sekitar 80 hingga 200 tahun untuk terurai.')
+
+@bot.command()
+async def ide_kerajinan(ctx):
+    img_name = random.choice(os.listdir('Gambar kerajinan'))
+    with open(f'Gambar kerajinan/{img_name}', 'rb') as f:
+        picture = discord.File(f)
+
+    await ctx.send(file=picture)
+
+@bot.command()
+async def info_polusi(ctx):
+    await ctx.send(f'1. Polusi udara adalah kontaminasi udara oleh zat apa pun yang berbahaya bagi manusia dan organisme hidup lainnya. Ini dapat menyebabkan atau berkontribusi pada berbagai masalah kesehatan. Mulai dari yang ringan, hingga yang parah dan berbahaya. Gas dan partikel berbahaya di udara berasal dari berbagai sumber. 2. Polusi air adalah suatu perubahan keadaan di suatu tempat penampungan air seperti danau, sungai, lautan dan air tanah akibat aktivitas manusia. Pencemaran dapat memiliki dampak yang signifikan terhadap kehidupan biota air, kualitas air tanah, kesehatan manusia, dan estetika lingkungan. 3. Polusi tanah adalah suatu kondisi dimana tanah tercemar di area permukaan atau bahkan bawah tanah. Pencemaran ini disebabkan karena adanya polutan atau kontaminan yang mencemari tanah.')
+
+@bot.command()
+async def info_sampah(ctx):
+    await ctx.send(f'Sampah adalah sisa kegiatan sehari-hari manusia dan/atau proses alam yang berbentuk padat. Sampah seringkali mengacu kepada material sisa yang tidak diinginkan atau tidak bermanfaat bagi manusia setelah berakhirnya suatu kegiatan atau proses domestik.')
+
+bot.run("Bot Token")
